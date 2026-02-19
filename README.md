@@ -27,12 +27,7 @@ sudo apt update && sudo apt install -y nginx
 Na sua máquina local, dentro da pasta do projeto, rode:
 
 ```bash
-./deploy.sh SEU_USUARIO SEU_IP
-```
-
-**Exemplo:**
-```bash
-./deploy.sh ubuntu 192.168.1.100
+./deploy.sh antonelly 10.12.25.48
 ```
 
 O script vai:
@@ -57,7 +52,7 @@ sudo ufw reload
 Abra no navegador:
 
 ```
-http://SEU_IP:3100
+http://10.12.25.48:3100
 ```
 
 ---
@@ -74,8 +69,8 @@ sudo chown $USER:$USER /var/www/assinatura-ant
 
 **Na sua máquina local:**
 ```bash
-rsync -avz index.html css/ js/ templates/ SEU_USUARIO@SEU_IP:/var/www/assinatura-ant/
-scp nginx.conf SEU_USUARIO@SEU_IP:/tmp/assinatura-ant.conf
+rsync -avz index.html css/ js/ templates/ antonelly@10.12.25.48:/var/www/assinatura-ant/
+scp nginx.conf antonelly@10.12.25.48:/tmp/assinatura-ant.conf
 ```
 
 **De volta na VM:**
@@ -94,7 +89,7 @@ sudo systemctl reload nginx
 Para enviar uma nova versão, basta rodar o script de deploy novamente:
 
 ```bash
-./deploy.sh SEU_USUARIO SEU_IP
+./deploy.sh SEU_USUARIO 10.12.25.48
 ```
 
 ---

@@ -3,8 +3,8 @@
 # Uso: ./deploy.sh SEU_USUARIO SEU_IP_DA_VM
 # Exemplo: ./deploy.sh ubuntu 192.168.1.100
 
-USER=${1:-ubuntu}
-HOST=${2:-SEU_IP_AQUI}
+USER=${1:-antonelly}
+HOST=${2:-10.12.25.48}
 DEST="/var/www/assinatura-ant"
 
 echo "==> Enviando arquivos para $USER@$HOST:$DEST"
