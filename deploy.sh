@@ -9,7 +9,7 @@ DEST="/var/www/assinatura-ant"
 
 echo "==> Enviando arquivos para $USER@$HOST:$DEST"
 
-ssh "$USER@$HOST" "sudo mkdir -p $DEST && sudo chown $USER:$USER $DEST"
+ssh -t "$USER@$HOST" "sudo mkdir -p $DEST && sudo chown $USER:$USER $DEST"
 
 rsync -avz --exclude='.git' --exclude='deploy.sh' --exclude='nginx.conf' \
   index.html css/ js/ templates/ \
@@ -17,11 +17,11 @@ rsync -avz --exclude='.git' --exclude='deploy.sh' --exclude='nginx.conf' \
 
 echo "==> Configurando nginx"
 scp nginx.conf "$USER@$HOST:/tmp/assinatura-ant.conf"
-ssh "$USER@$HOST" "
+ssh -t "$USER@$HOST" "
   sudo cp /tmp/assinatura-ant.conf /etc/nginx/sites-available/assinatura-ant &&
   sudo ln -sf /etc/nginx/sites-available/assinatura-ant /etc/nginx/sites-enabled/assinatura-ant &&
   sudo rm -f /etc/nginx/sites-enabled/default &&
   sudo nginx -t && sudo systemctl reload nginx
 "
 
-echo "==> Deploy concluído! Acesse: http://$HOST"
+echo "==> Deploy concluído! Acesse: http://$HOST:3200"
