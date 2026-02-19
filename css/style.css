@@ -1,0 +1,259 @@
+/* ========================================
+   Reset & Base
+   ======================================== */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Segoe UI", Arial, sans-serif;
+  background: #f5f7f6;
+  color: #333;
+  min-height: 100vh;
+}
+
+/* ========================================
+   Header
+   ======================================== */
+
+.header {
+  background: #00353b;
+  padding: 20px 32px;
+  display: flex;
+  align-items: center;
+}
+
+.header__logo {
+  height: 36px;
+}
+
+.header__title {
+  flex: 1;
+  text-align: center;
+  color: #fff;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+/* ========================================
+   Layout
+   ======================================== */
+
+.container {
+  max-width: 1100px;
+  margin: 32px auto;
+  padding: 0 24px;
+  display: grid;
+  grid-template-columns: 320px 1fr;
+  gap: 32px;
+  align-items: start;
+}
+
+/* ========================================
+   Panel (card genérico)
+   ======================================== */
+
+.panel {
+  background: #fff;
+  border-radius: 12px;
+  padding: 28px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+}
+
+.panel__title {
+  font-size: 15px;
+  font-weight: 600;
+  color: #00353b;
+  margin-bottom: 20px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* ========================================
+   Form Fields
+   ======================================== */
+
+.field {
+  margin-bottom: 16px;
+}
+
+.field__label {
+  display: block;
+  font-size: 13px;
+  font-weight: 600;
+  color: #555;
+  margin-bottom: 6px;
+}
+
+.field__input {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1.5px solid #ddd;
+  border-radius: 8px;
+  font-size: 14px;
+  font-family: inherit;
+  transition: border-color 0.2s;
+}
+
+.field__input:focus {
+  outline: none;
+  border-color: #5cab1d;
+}
+
+/* ========================================
+   Email Group (input + sufixo fixo)
+   ======================================== */
+
+.email-group {
+  display: flex;
+  align-items: center;
+  border: 1.5px solid #ddd;
+  border-radius: 8px;
+  overflow: hidden;
+  transition: border-color 0.2s;
+}
+
+.email-group:focus-within {
+  border-color: #5cab1d;
+}
+
+.email-group .field__input {
+  border: none;
+  border-radius: 0;
+  padding: 10px 4px 10px 12px;
+  flex: 1;
+  min-width: 0;
+}
+
+.email-group .field__input:focus {
+  border-color: transparent;
+}
+
+.email-group__suffix {
+  padding: 10px 12px 10px 0;
+  font-size: 14px;
+  color: #888;
+  white-space: nowrap;
+  user-select: none;
+}
+
+/* ========================================
+   Buttons
+   ======================================== */
+
+.actions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 24px;
+}
+
+.btn {
+  padding: 11px 16px;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.1s;
+  font-family: inherit;
+}
+
+.btn:active {
+  transform: scale(0.98);
+}
+
+.btn--primary {
+  background: #5cab1d;
+  color: #fff;
+}
+
+.btn--primary:hover {
+  background: #4e9518;
+}
+
+.btn--secondary {
+  background: #e8f5e0;
+  color: #3d7a12;
+}
+
+.btn--secondary:hover {
+  background: #d9edce;
+}
+
+.btn--copied {
+  background: #00353b !important;
+  color: #fff !important;
+}
+
+/* ========================================
+   Preview
+   ======================================== */
+
+.preview {
+  overflow-x: auto;
+}
+
+.preview .panel {
+  min-width: 0;
+}
+
+.preview__content {
+  padding: 16px 0;
+}
+
+/* ========================================
+   Instructions
+   ======================================== */
+
+.instructions {
+  grid-column: 1 / -1;
+  background: #fff;
+  border-radius: 12px;
+  padding: 24px 28px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+}
+
+.instructions__title {
+  font-size: 15px;
+  font-weight: 600;
+  color: #00353b;
+  margin-bottom: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.instructions__list {
+  padding-left: 20px;
+  font-size: 14px;
+  line-height: 1.8;
+  color: #555;
+}
+
+.instructions__list strong {
+  color: #333;
+}
+
+/* ========================================
+   Responsive
+   ======================================== */
+
+@media (max-width: 768px) {
+  .container {
+    grid-template-columns: 1fr;
+    margin: 16px auto;
+    padding: 0 12px;
+    gap: 16px;
+  }
+
+  .header {
+    padding: 16px;
+  }
+
+  .header__title {
+    font-size: 16px;
+  }
+}

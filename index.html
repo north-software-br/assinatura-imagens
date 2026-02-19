@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gerador de Assinatura - Antonelly</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <header class="header">
+    <img
+      class="header__logo"
+      src="https://cdn.signaturehound.com/users/eahclml9jkr6c/5ibtulmltl0w16.png"
+      alt="Antonelly"
+    >
+    <h1 class="header__title">Gerador de Assinatura de E-mail</h1>
+  </header>
+
+  <main class="container">
+
+    <!-- Formulário -->
+    <section class="panel">
+      <h2 class="panel__title">Dados do Colaborador</h2>
+
+      <div class="field">
+        <label class="field__label" for="nome">Nome completo</label>
+        <input class="field__input" type="text" id="nome" placeholder="Ex: Maria Silva">
+      </div>
+
+      <div class="field">
+        <label class="field__label" for="cargo">Cargo</label>
+        <input class="field__input" type="text" id="cargo" placeholder="Ex: Engenheira Civil">
+      </div>
+
+      <div class="field">
+        <label class="field__label" for="setor">Setor</label>
+        <input class="field__input" type="text" id="setor" placeholder="Ex: Engenharia">
+      </div>
+
+      <div class="field">
+        <label class="field__label" for="email">E-mail</label>
+        <div class="email-group">
+          <input class="field__input" type="text" id="email" placeholder="Ex: maria.silva">
+          <span class="email-group__suffix">@antonelly.com.br</span>
+        </div>
+      </div>
+
+      <div class="actions">
+        <button class="btn btn--primary" id="btn-copy-signature">Copiar Assinatura</button>
+      </div>
+    </section>
+
+    <!-- Preview -->
+    <section class="preview">
+      <div class="panel">
+        <h2 class="panel__title">Preview</h2>
+        <div class="preview__content" id="signature-preview"></div>
+      </div>
+    </section>
+
+    <!-- Instruções -->
+    <section class="instructions">
+      <h2 class="instructions__title">Como usar</h2>
+      <ol class="instructions__list">
+        <li>Preencha <strong>Nome</strong>, <strong>Cargo</strong>, <strong>Setor</strong> e <strong>E-mail</strong> nos campos ao lado.</li>
+        <li>Clique em <strong>"Copiar Assinatura"</strong>.</li>
+        <li><strong>Gmail:</strong> Configurações &rarr; Ver todas as configurações &rarr; Assinatura &rarr; cole com <strong>Ctrl+V</strong>.</li>
+        <li><strong>Outlook:</strong> Arquivo &rarr; Opções &rarr; Email &rarr; Assinaturas &rarr; cole com <strong>Ctrl+V</strong>.</li>
+      </ol>
+    </section>
+
+  </main>
+
+  <script src="js/signature-template.js"></script>
+  <script src="js/app.js"></script>
+
+</body>
+</html>
