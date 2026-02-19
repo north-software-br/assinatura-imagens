@@ -11,8 +11,8 @@ echo "==> Enviando arquivos para $USER@$HOST:$DEST"
 
 ssh -t "$USER@$HOST" "sudo mkdir -p $DEST && sudo chown $USER:$USER $DEST"
 
-rsync -avz --exclude='.git' --exclude='deploy.sh' --exclude='nginx.conf' \
-  index.html css/ js/ templates/ \
+rsync -avz --exclude='.git' --exclude='deploy.sh' --exclude='nginx.conf' --exclude='README.md' \
+  . \
   "$USER@$HOST:$DEST/"
 
 echo "==> Configurando nginx"
