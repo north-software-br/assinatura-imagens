@@ -88,14 +88,7 @@
   gap: 8px;
 }
 
-.panel__title::before {
-  content: "";
-  display: inline-block;
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: var(--color-accent);
-}
+
 
 /* ========================================
    Form Fields
