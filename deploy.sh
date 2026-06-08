@@ -7,12 +7,16 @@ USER=${1:-antonelly}
 HOST=${2:-10.12.25.48}
 DEST="/var/www/assinatura-ant"
 
+echo "==> Buildando aplicação React"
+npm install
+npm run build
+
 echo "==> Enviando arquivos para $USER@$HOST:$DEST"
 
 ssh -t "$USER@$HOST" "sudo mkdir -p $DEST && sudo chown $USER:$USER $DEST"
 
-rsync -avz --exclude='.git' --exclude='deploy.sh' --exclude='nginx.conf' --exclude='README.md' \
-  . \
+rsync -avz --delete \
+  dist/ \
   "$USER@$HOST:$DEST/"
 
 echo "==> Configurando nginx"

@@ -1,0 +1,435 @@
+/* ========================================
+   Tokens
+   ======================================== */
+
+:root {
+  --color-brand: #00353b;
+  --color-brand-light: #0a4750;
+  --color-accent: #5cab1d;
+  --color-accent-dark: #4e9518;
+  --color-accent-soft: #eaf6e0;
+  --color-bg: #f3f6f5;
+  --color-card: #ffffff;
+  --color-border: #e3e8e7;
+  --color-text: #1f2a2c;
+  --color-text-muted: #6b7878;
+  --radius-lg: 16px;
+  --radius-md: 10px;
+  --shadow-card: 0 4px 24px rgba(0, 53, 59, 0.06);
+  --shadow-card-hover: 0 8px 32px rgba(0, 53, 59, 0.1);
+}
+
+/* ========================================
+   Header
+   ======================================== */
+
+.header {
+  padding: 18px 32px;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+}
+
+.header__logo {
+  height: 34px;
+  justify-self: start;
+}
+
+.header__title {
+  grid-column: 2;
+  justify-self: center;
+  color: #000;
+  font-size: 17px;
+  font-weight: 600;
+  letter-spacing: 0.4px;
+  white-space: nowrap;
+}
+
+/* ========================================
+   Layout
+   ======================================== */
+
+.container {
+  max-width: 1440px;
+  margin: 40px auto;
+  padding: 0 24px;
+  display: grid;
+  grid-template-columns: 360px 1fr;
+  gap: 28px;
+  align-items: start;
+}
+
+/* ========================================
+   Panel (card genérico)
+   ======================================== */
+
+.panel {
+  background: var(--color-card);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: 28px;
+  box-shadow: var(--shadow-card);
+  transition: box-shadow 0.25s ease;
+}
+
+.panel:hover {
+  box-shadow: var(--shadow-card-hover);
+}
+
+.panel__title {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--color-brand);
+  margin-bottom: 22px;
+  text-transform: uppercase;
+  letter-spacing: 1.2px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.panel__title::before {
+  content: "";
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--color-accent);
+}
+
+/* ========================================
+   Form Fields
+   ======================================== */
+
+.field {
+  margin-bottom: 18px;
+}
+
+.field__label {
+  display: block;
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--color-text-muted);
+  margin-bottom: 7px;
+  letter-spacing: 0.3px;
+}
+
+.field__input {
+  width: 100%;
+  padding: 11px 14px;
+  border: 1.5px solid var(--color-border);
+  border-radius: var(--radius-md);
+  font-size: 14px;
+  font-family: inherit;
+  color: var(--color-text);
+  background: #fbfdfc;
+  transition:
+    border-color 0.2s,
+    box-shadow 0.2s,
+    background 0.2s;
+}
+
+.field__input::placeholder {
+  color: #aab4b3;
+}
+
+.field__input:focus {
+  outline: none;
+  border-color: var(--color-accent);
+  background: #fff;
+  box-shadow: 0 0 0 4px var(--color-accent-soft);
+}
+
+/* ========================================
+   Email Group (input + sufixo fixo)
+   ======================================== */
+
+.email-group {
+  display: flex;
+  align-items: center;
+  border: 1.5px solid var(--color-border);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  background: #fbfdfc;
+  transition:
+    border-color 0.2s,
+    box-shadow 0.2s,
+    background 0.2s;
+}
+
+.email-group:focus-within {
+  border-color: var(--color-accent);
+  background: #fff;
+  box-shadow: 0 0 0 4px var(--color-accent-soft);
+}
+
+.email-group .field__input {
+  border: none;
+  border-radius: 0;
+  padding: 11px 4px 11px 14px;
+  flex: 1;
+  min-width: 0;
+  background: transparent;
+}
+
+.email-group .field__input:focus {
+  border-color: transparent;
+  box-shadow: none;
+  background: transparent;
+}
+
+.email-group__suffix {
+  padding: 11px 14px 11px 0;
+  font-size: 14px;
+  color: var(--color-text-muted);
+  white-space: nowrap;
+  user-select: none;
+}
+
+/* ========================================
+   Buttons
+   ======================================== */
+
+.actions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 26px;
+}
+
+.btn {
+  padding: 13px 16px;
+  border: none;
+  border-radius: var(--radius-md);
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition:
+    background 0.2s ease,
+    transform 0.12s ease,
+    box-shadow 0.2s ease;
+  font-family: inherit;
+}
+
+.btn:active {
+  transform: scale(0.97);
+}
+
+.btn--primary {
+  background: var(--color-accent);
+  color: #fff;
+  box-shadow: 0 4px 14px rgba(92, 171, 29, 0.32);
+}
+
+.btn--primary:hover {
+  background: var(--color-accent-dark);
+  box-shadow: 0 6px 18px rgba(92, 171, 29, 0.4);
+}
+
+.btn--copied {
+  background: var(--color-brand) !important;
+  color: #fff !important;
+  box-shadow: 0 4px 14px rgba(0, 53, 59, 0.35) !important;
+}
+
+.btn__icon {
+  display: inline-flex;
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+}
+
+.btn__icon svg {
+  width: 100%;
+  height: 100%;
+}
+
+@keyframes btn-pop-in {
+  from {
+    opacity: 0;
+    transform: scale(0.6) rotate(-20deg);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) rotate(0deg);
+  }
+}
+
+.btn--copied .btn__icon {
+  animation: btn-pop-in 0.3s ease;
+}
+
+/* ========================================
+   Preview
+   ======================================== */
+
+.preview {
+  overflow-x: auto;
+}
+
+.preview .panel {
+  min-width: 0;
+}
+
+.preview__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 4px;
+}
+
+.preview__hint {
+  font-size: 12px;
+  color: var(--color-text-muted);
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: 999px;
+  padding: 5px 12px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.preview__hint::before {
+  content: "";
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #f0a93c;
+}
+
+.preview__hint--ready::before {
+  background: var(--color-accent);
+}
+
+.preview__content {
+  padding: 20px 0;
+}
+
+.preview__frame {
+  border: 1.5px dashed var(--color-border);
+  border-radius: var(--radius-md);
+  padding: 24px;
+  background: #fbfdfc;
+}
+
+/* ========================================
+   Instructions
+   ======================================== */
+
+.instructions {
+  grid-column: 1 / -1;
+  background: var(--color-card);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: 26px 28px;
+  box-shadow: var(--shadow-card);
+}
+
+.instructions__title {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--color-brand);
+  margin-bottom: 16px;
+  text-transform: uppercase;
+  letter-spacing: 1.2px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.instructions__title::before {
+  content: "";
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--color-accent);
+}
+
+.instructions__list {
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 14px;
+  counter-reset: step;
+}
+
+.instructions__list li {
+  position: relative;
+  padding: 14px 16px 14px 48px;
+  background: var(--color-bg);
+  border-radius: var(--radius-md);
+  font-size: 13.5px;
+  line-height: 1.6;
+  color: var(--color-text-muted);
+  counter-increment: step;
+}
+
+.instructions__list li::before {
+  content: counter(step);
+  position: absolute;
+  left: 14px;
+  top: 14px;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: var(--color-accent);
+  color: #fff;
+  font-size: 12px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.instructions__list strong {
+  color: var(--color-text);
+}
+
+/* ========================================
+   Responsive
+   ======================================== */
+
+@media (max-width: 768px) {
+  .container {
+    grid-template-columns: 1fr;
+    margin: 20px auto;
+    padding: 0 16px;
+    gap: 18px;
+  }
+
+  .header {
+    grid-template-columns: auto 1fr;
+    column-gap: 14px;
+    padding: 14px 20px;
+  }
+
+  .header__title {
+    grid-column: 2;
+    justify-self: start;
+    font-size: 15px;
+    white-space: normal;
+    line-height: 1.3;
+  }
+
+  .panel {
+    padding: 22px;
+  }
+
+  .preview__frame {
+    padding: 16px;
+  }
+
+  .instructions {
+    padding: 22px;
+  }
+
+  .instructions__list {
+    grid-template-columns: 1fr;
+  }
+}
