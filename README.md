@@ -2,6 +2,31 @@
 
 Ferramenta interna para geração de assinaturas de e-mail padronizadas para os colaboradores da Antonelly.
 
+Construído com **React + TypeScript + Vite**.
+
+---
+
+## Desenvolvimento local
+
+### Pré-requisitos
+
+- Node.js 18+ e npm
+
+### Rodar em modo dev
+
+```bash
+npm install
+npm run dev
+```
+
+### Build de produção
+
+```bash
+npm run build
+```
+
+Os arquivos gerados ficam em `dist/`.
+
 ---
 
 ## Deploy na VM (Ubuntu/Debian)
@@ -10,86 +35,34 @@ Ferramenta interna para geração de assinaturas de e-mail padronizadas para os 
 
 - VM com Ubuntu ou Debian
 - Acesso SSH à VM
-- Nginx instalado (ou instale com o passo abaixo)
+- Nginx instalado
 
----
-
-### 1. Instalar o Nginx (se ainda não tiver)
-
-```bash
-sudo apt update && sudo apt install -y nginx
-```
-
----
-
-### 2. Enviar os arquivos para a VM
+### Enviar para a VM
 
 Na sua máquina local, dentro da pasta do projeto, rode:
 
 ```bash
-./deploy.sh antonelly 10.12.25.48
+./deploy.sh SEU_USUARIO 10.12.25.48
 ```
 
 O script vai:
+- Instalar dependências e gerar o build (`npm install && npm run build`)
 - Criar a pasta `/var/www/assinatura-ant` na VM
-- Enviar todos os arquivos do projeto
+- Enviar o conteúdo de `dist/` via rsync
 - Configurar o nginx automaticamente
 - Recarregar o nginx
 
----
-
-### 3. Liberar a porta no firewall
+### Liberar a porta no firewall
 
 ```bash
-sudo ufw allow 3100/tcp
+sudo ufw allow 3200/tcp
 sudo ufw reload
 ```
 
----
-
-### 4. Acessar
-
-Abra no navegador:
+### Acessar
 
 ```
-http://10.12.25.48:3100
-```
-
----
-
-## Deploy manual (sem o script)
-
-Caso prefira fazer o processo manualmente:
-
-**Na VM:**
-```bash
-sudo mkdir -p /var/www/assinatura-ant
-sudo chown $USER:$USER /var/www/assinatura-ant
-```
-
-**Na sua máquina local:**
-```bash
-rsync -avz index.html css/ js/ templates/ antonelly@10.12.25.48:/var/www/assinatura-ant/
-scp nginx.conf antonelly@10.12.25.48:/tmp/assinatura-ant.conf
-```
-
-**De volta na VM:**
-```bash
-sudo cp /tmp/assinatura-ant.conf /etc/nginx/sites-available/assinatura-ant
-sudo ln -sf /etc/nginx/sites-available/assinatura-ant /etc/nginx/sites-enabled/assinatura-ant
-sudo rm -f /etc/nginx/sites-enabled/default
-sudo nginx -t
-sudo systemctl reload nginx
-```
-
----
-
-## Atualizar o projeto
-
-Para enviar uma nova versão, basta rodar o script de deploy novamente:
-
-```bash
-./deploy.sh SEU_USUARIO 10.12.25.48
+http://10.12.25.48:3200
 ```
 
 ---
@@ -98,14 +71,22 @@ Para enviar uma nova versão, basta rodar o script de deploy novamente:
 
 ```
 assinatura-ant/
-├── index.html              # Página principal
-├── css/
-│   └── style.css           # Estilos
-├── js/
-│   ├── app.js              # Lógica da interface
-│   └── signature-template.js  # Template HTML da assinatura
-├── templates/
-│   └── assinatura-original.html
-├── nginx.conf              # Configuração do nginx (porta 3100)
-└── deploy.sh               # Script de deploy via SSH
+├── index.html
+├── public/
+│   └── images/
+│       └── logos-certificacoes.svg
+├── src/
+│   ├── main.tsx
+│   ├── App.tsx
+│   ├── App.css
+│   ├── index.css
+│   ├── types.ts
+│   ├── components/
+│   │   ├── SignatureForm.tsx
+│   │   └── SignaturePreview.tsx
+│   └── utils/
+│       └── templates/
+│           └── signatureTemplate.ts
+├── nginx.conf       # Configuração do nginx (porta 3200)
+└── deploy.sh        # Script de build + deploy via SSH
 ```
