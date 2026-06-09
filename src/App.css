@@ -6,8 +6,9 @@
   --color-brand: #00353b;
   --color-brand-light: #0a4750;
   --color-accent: #5cab1d;
-  --color-accent-dark: #4e9518;
-  --color-accent-soft: #eaf6e0;
+  /* Tons derivados de --color-accent — seguem a cor da empresa ativa. */
+  --color-accent-dark: color-mix(in srgb, var(--color-accent) 86%, #000);
+  --color-accent-soft: color-mix(in srgb, var(--color-accent) 16%, #fff);
   --color-bg: #f3f6f5;
   --color-card: #ffffff;
   --color-border: #e3e8e7;
@@ -57,6 +58,147 @@
   grid-template-columns: 360px 1fr;
   gap: 28px;
   align-items: start;
+}
+
+/* ========================================
+   Tabs bar (seleção de empresa)
+   ======================================== */
+
+.tabs-bar {
+  grid-column: 1 / -1;
+  margin-bottom: 4px;
+}
+
+.company-tabs {
+  width: 100%;
+}
+
+.company-tabs__list {
+  display: flex;
+  width: 100%;
+  height: auto;
+  align-items: flex-end;
+  justify-content: center;
+  gap: 0;
+  overflow-x: auto;
+  padding: 0;
+  border: 0;
+  border-bottom: 1px solid var(--color-border);
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  scrollbar-width: thin;
+  scrollbar-color: color-mix(in srgb, var(--color-accent) 46%, #cbd5d3) transparent;
+}
+
+.company-tabs__list::-webkit-scrollbar {
+  height: 8px;
+}
+
+.company-tabs__list::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.company-tabs__list::-webkit-scrollbar-thumb {
+  background: color-mix(in srgb, var(--color-accent) 42%, #cbd5d3);
+  border-radius: 999px;
+}
+
+.company-tabs__trigger {
+  position: relative;
+  flex: 0 0 auto;
+  min-width: 0;
+  height: auto;
+  padding: 0;
+  border: 1px solid transparent;
+  border-radius: 0;
+  background: transparent;
+  color: var(--color-text-muted);
+  font-size: 15px;
+  font-weight: 650;
+  letter-spacing: 0;
+  box-shadow: none;
+  cursor: pointer;
+  transition:
+    color 0.2s ease,
+    transform 0.16s ease;
+}
+
+.company-tabs__trigger:hover {
+  color: var(--color-text);
+}
+
+.company-tabs__trigger:active {
+  transform: translateY(1px);
+}
+
+.company-tabs__trigger:focus-visible {
+  outline: none;
+  box-shadow: none;
+}
+
+.company-tabs__trigger[data-state="active"],
+.company-tabs__trigger--active {
+  color: var(--company-brand);
+  border-color: transparent;
+  background: transparent;
+  box-shadow: none;
+}
+
+.company-tabs__trigger-inner {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 48px;
+  padding: 12px 18px;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.company-tabs__hover {
+  position: absolute;
+  inset: 0;
+  border-radius: 8px;
+  background: color-mix(in srgb, var(--company-accent) 11%, #eef3f2);
+  pointer-events: none;
+}
+
+.company-tabs__icon {
+  position: relative;
+  z-index: 1;
+  width: 16px;
+  height: 16px;
+  flex: 0 0 16px;
+  color: currentColor;
+  stroke-width: 2;
+}
+
+.company-tabs__trigger[data-state="active"] .company-tabs__icon {
+  color: var(--company-accent);
+}
+
+.company-tabs__name {
+  position: relative;
+  z-index: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.company-tabs__indicator {
+  position: absolute;
+  right: 0;
+  bottom: -1px;
+  left: 0;
+  z-index: 2;
+  height: 2px;
+  border-radius: 999px;
+  background: var(--company-accent);
+  box-shadow: 0 3px 10px color-mix(in srgb, var(--company-accent) 44%, transparent);
 }
 
 /* ========================================
@@ -215,12 +357,12 @@
 .btn--primary {
   background: var(--color-accent);
   color: #fff;
-  box-shadow: 0 4px 14px rgba(92, 171, 29, 0.32);
+  box-shadow: 0 4px 14px color-mix(in srgb, var(--color-accent) 32%, transparent);
 }
 
 .btn--primary:hover {
   background: var(--color-accent-dark);
-  box-shadow: 0 6px 18px rgba(92, 171, 29, 0.4);
+  box-shadow: 0 6px 18px color-mix(in srgb, var(--color-accent) 40%, transparent);
 }
 
 .btn--copied {
@@ -412,6 +554,26 @@
 
   .panel {
     padding: 22px;
+  }
+
+  .tabs-bar {
+    margin-right: -16px;
+    margin-left: -16px;
+  }
+
+  .company-tabs__list {
+    justify-content: flex-start;
+    padding: 0 16px;
+  }
+
+  .company-tabs__trigger {
+    flex: 0 0 auto;
+    font-size: 14px;
+  }
+
+  .company-tabs__trigger-inner {
+    min-height: 46px;
+    padding: 11px 14px;
   }
 
   .preview__frame {

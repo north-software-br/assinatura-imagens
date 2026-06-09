@@ -1,15 +1,17 @@
 import { forwardRef } from "react";
 import type { SignatureData } from "../types";
+import type { CompanyConfig } from "../data/companies";
 import { generateSignature } from "../utils/templates/signatureTemplate";
 
 interface SignaturePreviewProps {
   data: SignatureData;
+  company: CompanyConfig;
 }
 
 export const SignaturePreview = forwardRef<
   HTMLDivElement,
   SignaturePreviewProps
->(function SignaturePreview({ data }, ref) {
+>(function SignaturePreview({ data, company }, ref) {
   const isComplete = Boolean(data.nome && data.cargo && data.setor && data.emailUser);
 
   return (
@@ -25,7 +27,7 @@ export const SignaturePreview = forwardRef<
           <div
             className="preview__frame"
             ref={ref}
-            dangerouslySetInnerHTML={{ __html: generateSignature(data) }}
+            dangerouslySetInnerHTML={{ __html: generateSignature(data, company) }}
           />
         </div>
       </div>

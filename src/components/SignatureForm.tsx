@@ -6,9 +6,10 @@ interface SignatureFormProps {
   onChange: (data: SignatureData) => void;
   onCopy: () => void;
   copied: boolean;
+  emailDomain: string;
 }
 
-export function SignatureForm({ data, onChange, onCopy, copied }: SignatureFormProps) {
+export function SignatureForm({ data, onChange, onCopy, copied, emailDomain }: SignatureFormProps) {
   function handleChange(field: keyof SignatureData) {
     return (e: ChangeEvent<HTMLInputElement>) => {
       onChange({ ...data, [field]: e.target.value });
@@ -66,7 +67,7 @@ export function SignatureForm({ data, onChange, onCopy, copied }: SignatureFormP
             value={data.emailUser}
             onChange={handleChange("emailUser")}
           />
-          <span className="email-group__suffix">@antonelly.com.br</span>
+          <span className="email-group__suffix">{emailDomain}</span>
         </div>
       </div>
 
