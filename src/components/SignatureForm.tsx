@@ -1,15 +1,15 @@
 import type { ChangeEvent } from "react";
+import { Button as StatefulButton } from "@/components/ui/stateful-button";
 import type { SignatureData } from "../types";
 
 interface SignatureFormProps {
   data: SignatureData;
   onChange: (data: SignatureData) => void;
   onCopy: () => void;
-  copied: boolean;
   emailDomain: string;
 }
 
-export function SignatureForm({ data, onChange, onCopy, copied, emailDomain }: SignatureFormProps) {
+export function SignatureForm({ data, onChange, onCopy, emailDomain }: SignatureFormProps) {
   function handleChange(field: keyof SignatureData) {
     return (e: ChangeEvent<HTMLInputElement>) => {
       onChange({ ...data, [field]: e.target.value });
@@ -72,24 +72,12 @@ export function SignatureForm({ data, onChange, onCopy, copied, emailDomain }: S
       </div>
 
       <div className="actions">
-        <button
-          className={`btn btn--primary${copied ? " btn--copied" : ""}`}
+        <StatefulButton
+          className="btn btn--primary signature-copy-button"
           onClick={onCopy}
         >
-          <span className="btn__icon" aria-hidden="true">
-            {copied ? (
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M20 6 9 17l-5-5" />
-              </svg>
-            ) : (
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <rect x="9" y="9" width="11" height="11" rx="2" />
-                <path d="M5 15H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v1" />
-              </svg>
-            )}
-          </span>
-          {copied ? "Copiado!" : "Copiar Assinatura"}
-        </button>
+          Copiar Assinatura
+        </StatefulButton>
       </div>
     </section>
   );

@@ -52,6 +52,9 @@ export function CompanyTabs({ companies, value, onValueChange }: CompanyTabsProp
                     <motion.span
                       layoutId="company-tab-hover"
                       className="company-tabs__hover"
+                      style={{
+                        background: `color-mix(in srgb, ${company.colors.accent} 14%, #eef3f2)`,
+                      }}
                       initial={{ opacity: 0 }}
                       animate={{ opacity: 1 }}
                       exit={{ opacity: 0 }}

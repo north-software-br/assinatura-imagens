@@ -9,6 +9,7 @@
   /* Tons derivados de --color-accent — seguem a cor da empresa ativa. */
   --color-accent-dark: color-mix(in srgb, var(--color-accent) 86%, #000);
   --color-accent-soft: color-mix(in srgb, var(--color-accent) 16%, #fff);
+  --color-accent-hover: color-mix(in srgb, var(--color-accent) 88%, #fff);
   --color-bg: #f3f6f5;
   --color-card: #ffffff;
   --color-border: #e3e8e7;
@@ -162,7 +163,6 @@
   position: absolute;
   inset: 0;
   border-radius: 8px;
-  background: color-mix(in srgb, var(--company-accent) 11%, #eef3f2);
   pointer-events: none;
 }
 
@@ -350,6 +350,27 @@
   font-family: inherit;
 }
 
+.signature-copy-button {
+  width: 100%;
+  height: 46px;
+  min-height: 46px;
+  border-radius: var(--radius-md);
+  background: var(--color-accent) !important;
+  color: #fff !important;
+  box-shadow: none !important;
+  --tw-ring-color: var(--color-accent);
+  --tw-ring-offset-color: #fff;
+}
+
+.signature-copy-button:hover {
+  background: var(--color-accent-hover) !important;
+}
+
+.signature-copy-button:focus-visible {
+  outline: none;
+  box-shadow: none !important;
+}
+
 .btn:active {
   transform: scale(0.97);
 }
@@ -365,37 +386,9 @@
   box-shadow: 0 6px 18px color-mix(in srgb, var(--color-accent) 40%, transparent);
 }
 
-.btn--copied {
-  background: var(--color-brand) !important;
-  color: #fff !important;
-  box-shadow: 0 4px 14px rgba(0, 53, 59, 0.35) !important;
-}
-
-.btn__icon {
-  display: inline-flex;
-  width: 18px;
-  height: 18px;
-  flex-shrink: 0;
-}
-
-.btn__icon svg {
-  width: 100%;
-  height: 100%;
-}
-
-@keyframes btn-pop-in {
-  from {
-    opacity: 0;
-    transform: scale(0.6) rotate(-20deg);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1) rotate(0deg);
-  }
-}
-
-.btn--copied .btn__icon {
-  animation: btn-pop-in 0.3s ease;
+.btn.signature-copy-button:hover {
+  background: var(--color-accent-hover) !important;
+  box-shadow: none !important;
 }
 
 /* ========================================

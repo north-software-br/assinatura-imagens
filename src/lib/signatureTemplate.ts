@@ -1,5 +1,19 @@
-import type { SignatureData } from "../../types";
-import type { CompanyConfig } from "../../data/companies";
+import type { CompanyConfig } from "@/data/companies";
+import type { SignatureData } from "@/types";
+
+/**
+ * Caixa padronizada do logo. Todas as logos são renderizadas dentro de um
+ * espaço fixo (`width` x `height`), centralizadas. Cada empresa define apenas
+ * `logo.width`/`logo.height` proporcionais para caber aqui dentro — o espaço
+ * reservado é sempre o mesmo, independente da empresa selecionada.
+ */
+const LOGO_BOX = { width: 120, height: 88 };
+
+/**
+ * Caixa padronizada da faixa de certificações/selos, alinhada sob o logo.
+ * Mesma lógica do `LOGO_BOX`: espaço fixo e conteúdo centralizado.
+ */
+const CERT_BOX = { width: 120, height: 24 };
 
 /** Converte "#rrggbb" em "r,g,b" para uso em rgb(...) inline (clientes de e-mail). */
 function hexToRgb(hex: string): string {
@@ -46,22 +60,22 @@ export function generateSignature(
                           <img src="${iconUrl(iconName, iconHex)}" alt="" width="18" height="18" style="display: block; border: 0px; margin: 0px; width: 18px; height: 18px;">
                         </p>
                       </td>
-                      <td style="font-family: Arial, sans-serif; font-size: 13px; line-height: 17px; white-space: nowrap; color: rgb(${muted}) !important; padding: 1px 0px; vertical-align: middle;">
+                      <td style="font-family: Arial, sans-serif; font-size: 10pt; line-height: 17px; white-space: nowrap; color: rgb(${muted}) !important; padding: 1px 0px; vertical-align: middle;">
                         <p style="margin: 1px;">${content}</p>
                       </td>
                     </tr>`;
 
-  const emailCell = `<a href="mailto:${emailFull}" target="_blank" style="font-family: Arial, sans-serif; font-size: 13px; line-height: 17px; white-space: nowrap; color: rgb(${muted}); text-decoration: none !important;"><span style="font-family: Arial, sans-serif; font-size: 13px; line-height: 17px; white-space: nowrap; color: rgb(${muted}); text-decoration: none !important;">${emailFull}</span></a>`;
+  const emailCell = `<a href="mailto:${emailFull}" target="_blank" style="font-family: Arial, sans-serif; font-size: 10pt; line-height: 17px; white-space: nowrap; color: rgb(${muted}); text-decoration: none !important;"><span style="font-family: Arial, sans-serif; font-size: 10pt; line-height: 17px; white-space: nowrap; color: rgb(${muted}); text-decoration: none !important;">${emailFull}</span></a>`;
 
-  const phoneCell = `<a href="tel:${phone.tel}" target="_blank" style="font-family: Arial, sans-serif; font-size: 13px; line-height: 17px; white-space: nowrap; color: rgb(${muted}); text-decoration: none !important;"><span style="font-family: Arial, sans-serif; font-size: 13px; line-height: 17px; white-space: nowrap; color: rgb(${muted}); text-decoration: none !important;">${phone.label}</span></a>`;
+  const phoneCell = `<a href="tel:${phone.tel}" target="_blank" style="font-family: Arial, sans-serif; font-size: 10pt; line-height: 17px; white-space: nowrap; color: rgb(${muted}); text-decoration: none !important;"><span style="font-family: Arial, sans-serif; font-size: 10pt; line-height: 17px; white-space: nowrap; color: rgb(${muted}); text-decoration: none !important;">${phone.label}</span></a>`;
 
-  const addressCell = `<span style="font-family: Arial, sans-serif; font-size: 13px; line-height: 17px; white-space: nowrap; color: rgb(${muted}); text-decoration: none !important;">${address}</span>`;
+  const addressCell = `<span style="font-family: Arial, sans-serif; font-size: 10pt; line-height: 17px; white-space: nowrap; color: rgb(${muted}); text-decoration: none !important;">${address}</span>`;
 
-  const websiteCell = `<a href="${website.url}" target="_blank" style="font-family: Arial, sans-serif; font-size: 13px; line-height: 17px; white-space: nowrap; color: rgb(${accent}); font-weight: 700; text-decoration: none !important;"><span style="font-family: Arial, sans-serif; font-size: 13px; line-height: 17px; white-space: nowrap; color: rgb(${accent}); font-weight: 700; text-decoration: none !important;">${website.label}</span></a>`;
+  const websiteCell = `<a href="${website.url}" target="_blank" style="font-family: Arial, sans-serif; font-size: 10pt; line-height: 17px; white-space: nowrap; color: rgb(${accent}); font-weight: 700; text-decoration: none !important;"><span style="font-family: Arial, sans-serif; font-size: 10pt; line-height: 17px; white-space: nowrap; color: rgb(${accent}); font-weight: 700; text-decoration: none !important;">${website.label}</span></a>`;
 
   const certificationsBlock = certifications
     ? `<a href="${website.url}" target="_blank">
-                      <img src="${certifications.src}" alt="" title="Logo" width="${certifications.width}" height="${certifications.height}" style="display: block; border: 0px; max-width: ${certifications.width}px;">
+                      <img src="${certifications.src}" alt="" title="Logo" width="${certifications.width}" height="${certifications.height}" style="display: inline-block; border: 0px; max-width: ${CERT_BOX.width}px; max-height: ${CERT_BOX.height}px;">
                     </a>`
     : "";
 
@@ -84,25 +98,17 @@ export function generateSignature(
       <table cellpadding="0" cellspacing="0" border="0" style="border-collapse: collapse; margin: 0px;">
         <tr>
 
-          <td align="center" valign="top" style="padding: 0px 25px 0px 0px; vertical-align: top;">
-            <table cellpadding="0" cellspacing="0" border="0" style="margin: 0px; border-collapse: collapse;">
-              <tr>
-                <td style="padding: 0px 1px 0px 0px;">
-                  <p style="margin: 1px;">
-                    <img src="${logo.src}" alt="" title="Profile Picture" width="${logo.width}" height="${logo.height}" style="display: block; border: 0px; max-width: ${logo.width}px;">
-                  </p>
-                </td>
-              </tr>
-            </table>
+          <td align="center" valign="middle" width="${LOGO_BOX.width}" height="${LOGO_BOX.height}" style="width: ${LOGO_BOX.width}px; height: ${LOGO_BOX.height}px; padding: 0px 25px 0px 0px; text-align: center; vertical-align: middle;">
+            <img src="${logo.src}" alt="" title="Profile Picture" width="${logo.width}" height="${logo.height}" style="display: inline-block; border: 0px; max-width: ${LOGO_BOX.width}px; max-height: ${LOGO_BOX.height}px;">
           </td>
           <td valign="top" style="padding: 0px 30px 0px 1px; vertical-align: top;">
             <table cellpadding="0" cellspacing="0" border="0" style="margin: 0px; border-collapse: collapse;">
               <tr>
-                <td style="padding: 0px 1px 0px 0px; font-family: Arial, sans-serif; font-size: 13px; line-height: 17px; white-space: nowrap;">
-                  <p style="font-family: Arial, sans-serif; font-size: 13px; line-height: 17px; font-weight: 700; color: rgb(${brand}); margin: 1px; white-space: nowrap;">${nome || "Nome do Colaborador"}</p>
-                  <p style="font-family: Arial, sans-serif; font-size: 13px; line-height: 18px; white-space: nowrap; color: rgb(${muted}); margin: 1px;">${cargo || "Cargo"}</p>
-                  <p style="font-family: Arial, sans-serif; font-size: 13px; line-height: 18px; white-space: nowrap; color: rgb(${muted}); margin: 1px;">${setor || "Setor"}</p>
-                  <p style="font-family: Arial, sans-serif; font-size: 13px; line-height: 18px; white-space: nowrap; color: rgb(${muted}); margin: 1px;">${legalName}</p>
+                <td style="padding: 0px 1px 0px 0px; font-family: Arial, sans-serif; font-size: 10pt; line-height: 17px; white-space: nowrap;">
+                  <p style="font-family: Arial, sans-serif; font-size: 10pt; line-height: 17px; font-weight: 700; color: rgb(${brand}); margin: 1px; white-space: nowrap;">${nome || "Nome do Colaborador"}</p>
+                  <p style="font-family: Arial, sans-serif; font-size: 10pt; line-height: 18px; white-space: nowrap; color: rgb(${muted}); margin: 1px;">${cargo || "Cargo"}</p>
+                  <p style="font-family: Arial, sans-serif; font-size: 10pt; line-height: 18px; white-space: nowrap; color: rgb(${muted}); margin: 1px;">${setor || "Setor"}</p>
+                  <p style="font-family: Arial, sans-serif; font-size: 10pt; line-height: 18px; white-space: nowrap; color: rgb(${muted}); margin: 1px;">${legalName}</p>
                 </td>
               </tr>
             </table>
@@ -123,10 +129,8 @@ export function generateSignature(
           <td colspan="2" style="padding: 25px 1px 0px 0px;">
             <table cellpadding="0" cellspacing="0" border="0" style="margin: 0px; border-collapse: collapse;">
               <tr>
-                <td style="padding: 0px 1px 0px 0px;">
-                  <p style="margin: 1px;">
-                    ${certificationsBlock}
-                  </p>
+                <td align="center" valign="middle" width="${CERT_BOX.width}" height="${CERT_BOX.height}" style="width: ${CERT_BOX.width}px; height: ${CERT_BOX.height}px; padding: 0px 1px 0px 0px; text-align: center; vertical-align: middle;">
+                  ${certificationsBlock}
                 </td>
               </tr>
             </table>

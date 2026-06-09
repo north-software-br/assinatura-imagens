@@ -1,11 +1,12 @@
-import { useMemo, useRef, useState } from "react";
+import { useMemo, useState } from "react";
 import type { CSSProperties } from "react";
-import "./App.css";
-import { SignatureForm } from "./components/SignatureForm";
-import { SignaturePreview } from "./components/SignaturePreview";
-import { CompanyTabs } from "./components/CompanyTabs";
-import { companies, defaultCompany } from "./data/companies";
-import type { SignatureData } from "./types";
+import "./theme.css";
+import { SignatureForm } from "@/components/SignatureForm";
+import { SignaturePreview } from "@/components/SignaturePreview";
+import { CompanyTabs } from "@/components/CompanyTabs";
+import { companies, defaultCompany } from "@/data/companies";
+import { useCopySignature } from "@/hooks/useCopySignature";
+import type { SignatureData } from "@/types";
 
 const INITIAL_DATA: SignatureData = {
   nome: "",
@@ -17,8 +18,7 @@ const INITIAL_DATA: SignatureData = {
 function App() {
   const [data, setData] = useState<SignatureData>(INITIAL_DATA);
   const [companyId, setCompanyId] = useState<string>(defaultCompany.id);
-  const [copied, setCopied] = useState(false);
-  const previewRef = useRef<HTMLDivElement>(null);
+  const copySignature = useCopySignature();
 
   const company = useMemo(
     () => companies.find((c) => c.id === companyId) ?? defaultCompany,
@@ -29,25 +29,11 @@ function App() {
   // consome estas variáveis, então a interface inteira passa a refletir a marca.
   const themeStyle = {
     "--color-accent": company.colors.accent,
+    "--color-accent-dark": `color-mix(in srgb, ${company.colors.accent} 86%, #000)`,
+    "--color-accent-soft": `color-mix(in srgb, ${company.colors.accent} 16%, #fff)`,
+    "--color-accent-hover": `color-mix(in srgb, ${company.colors.accent} 88%, #fff)`,
     "--color-brand": company.colors.brand,
   } as CSSProperties;
-
-  function copyRichText() {
-    const preview = previewRef.current;
-    if (!preview) return;
-
-    const range = document.createRange();
-    range.selectNodeContents(preview);
-
-    const selection = window.getSelection();
-    selection?.removeAllRanges();
-    selection?.addRange(range);
-    document.execCommand("copy");
-    selection?.removeAllRanges();
-
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
-  }
 
   return (
     <div style={themeStyle}>
@@ -72,11 +58,10 @@ function App() {
         <SignatureForm
           data={data}
           onChange={setData}
-          onCopy={copyRichText}
-          copied={copied}
+          onCopy={() => copySignature(data, company)}
           emailDomain={company.emailDomain}
         />
-        <SignaturePreview data={data} company={company} ref={previewRef} />
+        <SignaturePreview data={data} company={company} />
 
         <section className="instructions">
           <h2 className="instructions__title">Como usar</h2>
