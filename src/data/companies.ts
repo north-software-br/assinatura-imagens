@@ -97,8 +97,7 @@ export const companies: CompanyConfig[] = [
       height: 16,
     },
     social: {
-      instagram: "https://instagram.com/",
-      linkedin: "https://linkedin.com/",
+      instagram: "https://www.instagram.com/elpservicos/",
     },
     colors: {
       brand: "#1f2937",
@@ -120,8 +119,6 @@ export const companies: CompanyConfig[] = [
       height: 68,
     },
     social: {
-      instagram: "https://instagram.com/",
-      linkedin: "https://linkedin.com/",
     },
     colors: {
       brand: "#3b2f2f",
@@ -143,8 +140,7 @@ export const companies: CompanyConfig[] = [
       height: 70,
     },
     social: {
-      instagram: "https://instagram.com/",
-      linkedin: "https://linkedin.com/",
+      instagram: "https://www.instagram.com/office145.am/",
     },
     colors: {
       brand: "#1f2937",
