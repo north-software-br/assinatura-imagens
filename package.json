@@ -5,7 +5,11 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "dev:antonelly": "vite --mode antonelly",
     "build": "tsc -b && vite build",
+    "build:antonelly": "tsc -b && vite build --mode antonelly --outDir dist/antonelly",
+    "build:grupo": "tsc -b && vite build --mode grupo --outDir dist/grupo",
+    "build:all": "npm run build:antonelly && npm run build:grupo",
     "lint": "eslint .",
     "preview": "vite preview"
   },

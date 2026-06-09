@@ -4,9 +4,13 @@ import "./theme.css";
 import { SignatureForm } from "@/components/SignatureForm";
 import { SignaturePreview } from "@/components/SignaturePreview";
 import { CompanyTabs } from "@/components/CompanyTabs";
-import { companies, defaultCompany } from "@/data/companies";
+import { activeBrand } from "@/data/brands";
 import { useCopySignature } from "@/hooks/useCopySignature";
 import type { SignatureData } from "@/types";
+
+// Empresas visíveis nesta publicação — definidas pelo perfil (VITE_BRAND).
+const { companies, showTabs } = activeBrand;
+const defaultCompany = companies[0];
 
 const INITIAL_DATA: SignatureData = {
   nome: "",
@@ -47,13 +51,15 @@ function App() {
       </header>
 
       <main className="container">
-        <div className="tabs-bar">
-          <CompanyTabs
-            companies={companies}
-            value={companyId}
-            onValueChange={setCompanyId}
-          />
-        </div>
+        {showTabs && (
+          <div className="tabs-bar">
+            <CompanyTabs
+              companies={companies}
+              value={companyId}
+              onValueChange={setCompanyId}
+            />
+          </div>
+        )}
 
         <SignatureForm
           data={data}
@@ -66,7 +72,9 @@ function App() {
         <section className="instructions">
           <h2 className="instructions__title">Como usar</h2>
           <ol className="instructions__list">
-            <li>Selecione a <strong>empresa</strong> na aba acima.</li>
+            {showTabs && (
+              <li>Selecione a <strong>empresa</strong> na aba acima.</li>
+            )}
             <li>Preencha <strong>Nome</strong>, <strong>Cargo</strong>, <strong>Setor</strong> e <strong>E-mail</strong> nos campos ao lado.</li>
             <li>Clique em <strong>"Copiar Assinatura"</strong>.</li>
             <li><strong>Gmail:</strong> Configurações &rarr; Ver todas as configurações &rarr; Assinatura &rarr; cole com <strong>Ctrl+V</strong>.</li>

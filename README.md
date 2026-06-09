@@ -1,8 +1,23 @@
-# Gerador de Assinatura de E-mail — Antonelly
+# Gerador de Assinatura de E-mail
 
-Ferramenta interna para geração de assinaturas de e-mail padronizadas para os colaboradores da Antonelly.
+Ferramenta interna para geração de assinaturas de e-mail padronizadas.
 
 Construído com **React + TypeScript + Vite**.
+
+---
+
+## Marcas (perfis de publicação)
+
+O **mesmo código-fonte** é publicado em duas URLs/portas distintas. A variável
+`VITE_BRAND` decide quais empresas aparecem e se o seletor de abas é exibido:
+
+| Marca       | `VITE_BRAND` | Empresas                | Abas | Porta |
+|-------------|--------------|-------------------------|------|-------|
+| Antonelly   | `antonelly`  | Antonelly               | não  | 3100  |
+| Grupo       | `grupo`      | ELP, LPG, Office 145    | sim  | 3200  |
+
+Os perfis são definidos em [`src/data/brands.ts`](src/data/brands.ts); os dados
+de cada empresa ficam em [`src/data/companies.ts`](src/data/companies.ts).
 
 ---
 
@@ -16,16 +31,17 @@ Construído com **React + TypeScript + Vite**.
 
 ```bash
 npm install
-npm run dev
+npm run dev            # perfil "grupo" (ELP, LPG, Office 145)
+npm run dev:antonelly  # perfil "antonelly"
 ```
 
 ### Build de produção
 
 ```bash
-npm run build
+npm run build:antonelly  # gera dist/antonelly
+npm run build:grupo      # gera dist/grupo
+npm run build:all        # gera as duas
 ```
-
-Os arquivos gerados ficam em `dist/`.
 
 ---
 
@@ -33,28 +49,28 @@ Os arquivos gerados ficam em `dist/`.
 
 ### Pré-requisitos
 
-- VM com Ubuntu ou Debian
-- Acesso SSH à VM
-- Nginx instalado
+- VM com Ubuntu ou Debian, acesso SSH e Nginx instalado
 
-### Enviar para a VM
+### Publicar
 
-Na sua máquina local, dentro da pasta do projeto, rode:
+Na sua máquina local, dentro da pasta do projeto:
 
 ```bash
-./deploy.sh SEU_USUARIO 10.12.25.48
+./deploy.sh SEU_USUARIO 10.12.25.48            # publica as duas marcas
+./deploy.sh SEU_USUARIO 10.12.25.48 antonelly  # só Antonelly (porta 3100)
+./deploy.sh SEU_USUARIO 10.12.25.48 grupo      # só Grupo (porta 3200)
 ```
 
-O script vai:
-- Instalar dependências e gerar o build (`npm install && npm run build`)
-- Criar a pasta `/var/www/assinatura-ant` na VM
-- Enviar o conteúdo de `dist/` via rsync
-- Configurar o nginx automaticamente
-- Recarregar o nginx
+Para cada marca, o script:
+- Gera o build com a `VITE_BRAND` correta
+- Envia o `dist/<marca>/` via rsync para sua pasta na VM
+  (`/var/www/assinatura-antonelly` ou `/var/www/assinatura-grupo`)
+- Instala/ativa o site nginx correspondente e recarrega o nginx
 
-### Liberar a porta no firewall
+### Liberar as portas no firewall
 
 ```bash
+sudo ufw allow 3100/tcp
 sudo ufw allow 3200/tcp
 sudo ufw reload
 ```
@@ -62,7 +78,8 @@ sudo ufw reload
 ### Acessar
 
 ```
-http://10.12.25.48:3200
+http://10.12.25.48:3100   # Antonelly
+http://10.12.25.48:3200   # Grupo (ELP, LPG, Office 145)
 ```
 
 ---
@@ -70,23 +87,30 @@ http://10.12.25.48:3200
 ## Estrutura do projeto
 
 ```
-assinatura-ant/
+assinatura-email/
 ├── index.html
-├── public/
-│   └── images/
-│       └── logos-certificacoes.svg
 ├── src/
 │   ├── main.tsx
 │   ├── App.tsx
-│   ├── App.css
 │   ├── index.css
+│   ├── theme.css
 │   ├── types.ts
+│   ├── data/
+│   │   ├── brands.ts       # Perfis de publicação (antonelly / grupo)
+│   │   └── companies.ts    # Dados de cada empresa
 │   ├── components/
+│   │   ├── CompanyTabs.tsx
 │   │   ├── SignatureForm.tsx
-│   │   └── SignaturePreview.tsx
-│   └── utils/
-│       └── templates/
-│           └── signatureTemplate.ts
-├── nginx.conf       # Configuração do nginx (porta 3200)
-└── deploy.sh        # Script de build + deploy via SSH
+│   │   ├── SignaturePreview.tsx
+│   │   └── ui/
+│   ├── hooks/
+│   │   └── useCopySignature.ts
+│   └── lib/
+│       ├── signatureTemplate.ts
+│       └── utils.ts
+├── .env.antonelly          # VITE_BRAND=antonelly
+├── .env.grupo              # VITE_BRAND=grupo
+├── nginx-antonelly.conf    # Site nginx — porta 3100
+├── nginx-grupo.conf        # Site nginx — porta 3200
+└── deploy.sh               # Build + deploy via SSH (por marca ou ambas)
 ```
