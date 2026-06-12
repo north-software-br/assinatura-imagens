@@ -51,12 +51,12 @@ export const companies: CompanyConfig[] = [
       "Av. Amazonas Cavalcante, 25 - Parque 10, Manaus",
     website: { url: "https://antonelly.com.br/", label: "antonelly.com.br" },
     logo: {
-      src: "https://cdn.jsdelivr.net/gh/north-software-br/assinatura-imagens@main/antonelly-logo.svg",
+      src: "https://cdn.jsdelivr.net/gh/north-software-br/assinatura-imagens@main/public/images/antonelly-logo.svg",
       width: 93,
       height: 88,
     },
     certifications: {
-      src: "https://cdn.jsdelivr.net/gh/north-software-br/assinatura-imagens@main/certificacoes.svg",
+      src: "https://cdn.jsdelivr.net/gh/north-software-br/assinatura-imagens@main/public/images/certificacoes.svg",
       width: 120,
       height: 16,
     },
@@ -92,7 +92,7 @@ export const companies: CompanyConfig[] = [
       height: 37,
     },
       certifications: {
-      src: "https://cdn.jsdelivr.net/gh/north-software-br/assinatura-imagens@main/certificacoes.svg",
+      src: "https://cdn.jsdelivr.net/gh/north-software-br/assinatura-imagens@main/public/images/certificacoes.svg",
       width: 120,
       height: 16,
     },
