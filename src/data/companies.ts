@@ -9,6 +9,14 @@
  * e-mail funcionam melhor com cores absolutas inline) e usadas para colorir os
  * ícones via CDN do SignatureHound.
  */
+import {
+  antonellyLogo,
+  certificacoes,
+  elp,
+  lpg,
+  office,
+} from "./logos";
+
 export interface CompanyConfig {
   /** Slug único — usado como value da aba. */
   id: string;
@@ -51,12 +59,12 @@ export const companies: CompanyConfig[] = [
       "Av. Amazonas Cavalcante, 25 - Parque 10, Manaus",
     website: { url: "https://antonelly.com.br/", label: "antonelly.com.br" },
     logo: {
-      src: "https://cdn.jsdelivr.net/gh/north-software-br/assinatura-imagens@main/public/images/antonelly-logo.svg",
+      src: antonellyLogo,
       width: 93,
       height: 88,
     },
     certifications: {
-      src: "https://cdn.jsdelivr.net/gh/north-software-br/assinatura-imagens@main/public/images/certificacoes.svg",
+      src: certificacoes,
       width: 120,
       height: 16,
     },
@@ -87,12 +95,12 @@ export const companies: CompanyConfig[] = [
     address: "Rua Rio De Janeiro, 145 - Flores, Manaus",
     website: { url: "http://elpconstrucoeseservicos.com", label: "elpconstrucoeseservicos.com" },
     logo: {
-      src: "https://cdn.jsdelivr.net/gh/north-software-br/assinatura-imagens@main/public/images/elp.svg",
+      src: elp,
       width: 120,
       height: 37,
     },
       certifications: {
-      src: "https://cdn.jsdelivr.net/gh/north-software-br/assinatura-imagens@main/public/images/certificacoes.svg",
+      src: certificacoes,
       width: 120,
       height: 16,
     },
@@ -114,7 +122,7 @@ export const companies: CompanyConfig[] = [
     address: "Rua Rio De Janeiro, 145 - Flores, Manaus",
     website: { url: "https://lpgservicos.com.br/", label: "lpgservicos.com.br" },
     logo: {
-      src: "https://cdn.jsdelivr.net/gh/north-software-br/assinatura-imagens@main/public/images/lpg.svg",
+      src: lpg,
       width: 70,
       height: 68,
     },
@@ -135,7 +143,7 @@ export const companies: CompanyConfig[] = [
     address: "Rua Rio De Janeiro, 145 - Flores, Manaus",
     website: { url: "https://office145.com.br/", label: "office145.com.br" },
     logo: {
-      src: "https://cdn.jsdelivr.net/gh/north-software-br/assinatura-imagens@main/public/images/office.svg",
+      src: office,
       width: 110,
       height: 70,
     },
