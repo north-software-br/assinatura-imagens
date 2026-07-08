@@ -17,11 +17,13 @@ export const SignaturePreview = forwardRef<HTMLDivElement, SignaturePreviewProps
             <h2 className="panel__title">Preview</h2>
           </div>
           <div className="preview__content">
-            <div
-              ref={ref}
-              className="preview__frame"
-              dangerouslySetInnerHTML={{ __html: generateSignature(data, company) }}
-            />
+            <div className="preview__frame">
+              <div
+                ref={ref}
+                style={{ display: "inline-block" }}
+                dangerouslySetInnerHTML={{ __html: generateSignature(data, company) }}
+              />
+            </div>
           </div>
         </div>
       </section>
