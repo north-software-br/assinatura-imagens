@@ -1,11 +1,11 @@
-import { useMemo, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 import type { CSSProperties } from "react";
 import "./theme.css";
 import { SignatureForm } from "@/components/SignatureForm";
 import { SignaturePreview } from "@/components/SignaturePreview";
 import { CompanyTabs } from "@/components/CompanyTabs";
 import { activeBrand } from "@/data/brands";
-import { useCopySignature } from "@/hooks/useCopySignature";
+import { useCopySignatureImage } from "@/hooks/useCopySignatureImage";
 import type { SignatureData } from "@/types";
 
 // Empresas visíveis nesta publicação — definidas pelo perfil (VITE_BRAND).
@@ -22,7 +22,8 @@ const INITIAL_DATA: SignatureData = {
 function App() {
   const [data, setData] = useState<SignatureData>(INITIAL_DATA);
   const [companyId, setCompanyId] = useState<string>(defaultCompany.id);
-  const copySignature = useCopySignature();
+  const copySignatureImage = useCopySignatureImage();
+  const previewRef = useRef<HTMLDivElement>(null);
 
   const company = useMemo(
     () => companies.find((c) => c.id === companyId) ?? defaultCompany,
@@ -64,10 +65,12 @@ function App() {
         <SignatureForm
           data={data}
           onChange={setData}
-          onCopy={() => copySignature(data, company)}
+          onCopy={() => {
+            if (previewRef.current) return copySignatureImage(previewRef.current);
+          }}
           emailDomain={company.emailDomain}
         />
-        <SignaturePreview data={data} company={company} />
+        <SignaturePreview ref={previewRef} data={data} company={company} />
 
         <section className="instructions">
           <h2 className="instructions__title">Como usar</h2>

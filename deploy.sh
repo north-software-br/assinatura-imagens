@@ -12,47 +12,43 @@ USER=${1:-antonelly}
 HOST=${2:-10.12.25.48}
 BRAND=${3:-all}
 
-# Publica uma marca: build + envio + nginx.
-#   $1 marca | $2 pasta no servidor | $3 arquivo nginx | $4 porta
-deploy_one() {
-  local brand=$1 dest=$2 conf=$3 port=$4
-
-  echo "==> [$brand] Buildando (VITE_BRAND=$brand)"
-  npm run "build:$brand"
-
-  echo "==> [$brand] Enviando para $USER@$HOST:$dest"
-  ssh -t "$USER@$HOST" "sudo mkdir -p $dest && sudo chown $USER:$USER $dest"
-  rsync -avz --delete "dist/$brand/" "$USER@$HOST:$dest/"
-
-  echo "==> [$brand] Configurando nginx (porta $port)"
-  scp "$conf" "$USER@$HOST:/tmp/assinatura-$brand.conf"
-  ssh -t "$USER@$HOST" "
-    sudo cp /tmp/assinatura-$brand.conf /etc/nginx/sites-available/assinatura-$brand &&
-    sudo ln -sf /etc/nginx/sites-available/assinatura-$brand /etc/nginx/sites-enabled/assinatura-$brand &&
-    sudo nginx -t && sudo systemctl reload nginx
-  "
-
-  echo "==> [$brand] OK: http://$HOST:$port"
-}
-
-echo "==> Instalando dependências"
-npm install
+declare -A DEST=( [antonelly]="/var/www/assinatura-antonelly" [grupo]="/var/www/assinatura-grupo" )
+declare -A CONF=( [antonelly]="nginx-antonelly.conf" [grupo]="nginx-grupo.conf" )
+declare -A PORT=( [antonelly]=3100 [grupo]=3200 )
 
 case "$BRAND" in
-  antonelly)
-    deploy_one antonelly /var/www/assinatura-antonelly nginx-antonelly.conf 3100
-    ;;
-  grupo)
-    deploy_one grupo /var/www/assinatura-grupo nginx-grupo.conf 3200
-    ;;
-  all)
-    deploy_one antonelly /var/www/assinatura-antonelly nginx-antonelly.conf 3100
-    deploy_one grupo /var/www/assinatura-grupo nginx-grupo.conf 3200
-    ;;
+  antonelly|grupo) BRANDS=("$BRAND") ;;
+  all) BRANDS=(antonelly grupo) ;;
   *)
     echo "MARCA inválida: '$BRAND'. Use: antonelly | grupo | all" >&2
     exit 1
     ;;
 esac
+
+echo "==> Instalando dependências"
+npm install
+
+for brand in "${BRANDS[@]}"; do
+  echo "==> [$brand] Buildando (VITE_BRAND=$brand)"
+  npm run "build:$brand"
+  scp "${CONF[$brand]}" "$USER@$HOST:/tmp/assinatura-$brand.conf"
+done
+
+# Uma única sessão ssh: pede a senha do sudo apenas uma vez para todo o deploy.
+echo "==> Preparando diretórios e nginx no servidor (1 pedido de senha)"
+remote_cmd=""
+for brand in "${BRANDS[@]}"; do
+  remote_cmd+="sudo mkdir -p ${DEST[$brand]} && sudo chown $USER:$USER ${DEST[$brand]} && "
+  remote_cmd+="sudo cp /tmp/assinatura-$brand.conf /etc/nginx/sites-available/assinatura-$brand && "
+  remote_cmd+="sudo ln -sf /etc/nginx/sites-available/assinatura-$brand /etc/nginx/sites-enabled/assinatura-$brand && "
+done
+remote_cmd+="sudo nginx -t && sudo systemctl reload nginx"
+ssh -t "$USER@$HOST" "$remote_cmd"
+
+for brand in "${BRANDS[@]}"; do
+  echo "==> [$brand] Enviando para $USER@$HOST:${DEST[$brand]}"
+  rsync -avz --delete "dist/$brand/" "$USER@$HOST:${DEST[$brand]}/"
+  echo "==> [$brand] OK: http://$HOST:${PORT[$brand]}"
+done
 
 echo "==> Deploy concluído!"
