@@ -76,7 +76,7 @@ export function SignatureForm({ data, onChange, onCopy, emailDomain }: Signature
           className="btn btn--primary signature-copy-button"
           onClick={onCopy}
         >
-          Copiar Assinatura
+          Baixar assinatura
         </StatefulButton>
       </div>
     </section>
