@@ -97,7 +97,7 @@ export const companies: CompanyConfig[] = [
     logo: {
       src: elp,
       width: 120,
-      height: 37,
+      height: 76,
     },
       certifications: {
       src: certificacoes,
@@ -144,8 +144,8 @@ export const companies: CompanyConfig[] = [
     website: { url: "https://office145.com.br/", label: "office145.com.br" },
     logo: {
       src: office,
-      width: 110,
-      height: 70,
+      width: 120,
+      height: 35,
     },
     social: {
       instagram: "https://www.instagram.com/office145.am/",
