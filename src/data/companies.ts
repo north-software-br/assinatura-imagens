@@ -9,13 +9,7 @@
  * e-mail funcionam melhor com cores absolutas inline) e usadas para colorir os
  * ícones via CDN do SignatureHound.
  */
-import {
-  antonellyLogo,
-  certificacoes,
-  elp,
-  lpg,
-  office,
-} from "./logos";
+import { antonellyLogo, certificacoes, elp, lpg, office } from "./logos";
 
 export interface CompanyConfig {
   /** Slug único — usado como value da aba. */
@@ -55,8 +49,7 @@ export const companies: CompanyConfig[] = [
     legalName: "Antonelly Construções e Serviços",
     emailDomain: "@antonelly.com.br",
     phone: { tel: "+559232363572", label: "+55 92 3236-3572" },
-    address:
-      "Av. Amazonas Cavalcante, 25 - Parque 10, Manaus",
+    address: "Av. Amazonas Cavalcante, 25 - Parque 10, Manaus",
     website: { url: "https://antonelly.com.br/", label: "antonelly.com.br" },
     logo: {
       src: antonellyLogo,
@@ -90,16 +83,19 @@ export const companies: CompanyConfig[] = [
     id: "elp",
     name: "ELP",
     legalName: "ELP Construções e Serviços",
-    emailDomain: "@elpconstrucoes.com.br",
+    emailDomain: "@elpconstrucoes.com",
     phone: { tel: "+5592992084344", label: "+55 92 99208-4344" },
     address: "Rua Rio De Janeiro, 145 - Flores, Manaus",
-    website: { url: "http://elpconstrucoeseservicos.com", label: "elpconstrucoeseservicos.com" },
+    website: {
+      url: "https://elpconstrucoeseservicos.com",
+      label: "elpconstrucoeseservicos.com",
+    },
     logo: {
       src: elp,
       width: 120,
       height: 76,
     },
-      certifications: {
+    certifications: {
       src: certificacoes,
       width: 120,
       height: 16,
@@ -120,14 +116,16 @@ export const companies: CompanyConfig[] = [
     emailDomain: "@lpgservicos.com.br",
     phone: { tel: "+5592991050170", label: "+55 92 99105-0170" },
     address: "Rua Rio De Janeiro, 145 - Flores, Manaus",
-    website: { url: "https://lpgservicos.com.br/", label: "lpgservicos.com.br" },
+    website: {
+      url: "https://lpgservicos.com.br/",
+      label: "lpgservicos.com.br",
+    },
     logo: {
       src: lpg,
       width: 70,
       height: 68,
     },
-    social: {
-    },
+    social: {},
     colors: {
       brand: "#3b2f2f",
       accent: "#ee3342",
